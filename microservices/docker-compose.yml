@@ -1,0 +1,29 @@
+version: "3"
+services:
+  gateway:
+    container_name: gateway_service
+    restart: always
+    build: ./Gateway
+    ports:
+      - 3000:5000
+    depends_on:
+      - soundutils
+    networks:
+      - service_network
+    environment:
+      SOUNDUTILS_HOST: soundutils
+      SOUNDUTILS_PORT: 5000
+
+  soundutils:
+    container_name: sound_utils_service
+    restart: always
+    build: ./sound-utils
+    ports:
+      - "3001:5000"
+    networks:
+      - service_network
+
+networks:
+  service_network:
+volumes:
+  my_dbdata:

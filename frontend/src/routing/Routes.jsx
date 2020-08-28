@@ -1,7 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { HomePage } from '../pages/HomePage';
-import { Dashboard } from '../pages/Dashboard';
+import { AboutPage } from '../pages/AboutPage';
+import { ToolPage } from '../pages/ToolPage';
 
 export class Routes extends React.Component {
     render() {
@@ -10,8 +11,11 @@ export class Routes extends React.Component {
                 <Route exact path="/" render={() => (
                     <HomePage />
                 )} />
-                <Route exact path="/board" render={() => (
-                    <Dashboard />
+                <Route exact path="/about" render={() => (
+                    <AboutPage />
+                )} />
+                <Route exact path="/tool" render={() => (
+                    <ToolPage />
                 )} />
             </BrowserRouter>
         )

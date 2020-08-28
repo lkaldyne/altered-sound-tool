@@ -1,0 +1,40 @@
+.header_div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0,0,0,0);
+    height: 7rem;
+}
+
+.header_userInfoHead {
+    margin: 15px 40px 15px 15px;
+    font-size: 20px;
+    display: flex
+}
+
+.header_userInfoSectionElem {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin: 0 0 0 50px;
+    color: 'white';
+    transition: 0.3s;
+}
+
+#header_navbutton {
+    color: white;
+    cursor: pointer;
+}
+  
+#header_navbutton:hover {
+    color: #F1578F;
+}
+
+#header_gitforge {
+    text-decoration: none;
+    color: white;
+}
+  
+#header_gitforge:hover {
+    color: #F1578F;
+}

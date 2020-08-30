@@ -1,9 +1,25 @@
 .nav_div {
     position: fixed;
-    left: 75vw;
+    left: 100vw;
     width: 25vw;
     height: 100vh;
-    background: linear-gradient(90deg, rgba(0,0,0,0), #110631 10%);
+    background: #110631;
+    transition: 0.5s;
+}
+
+.nav_navOpen {
+    animation: nav_slide-in 0.5s;
+    left: 75vw;
+}
+   
+@keyframes nav_slide-in {
+    from {
+        left: 100vw;
+    }
+
+    to {
+        left: 75vw;
+    }
 }
 
 .nav_menu {

@@ -1,4 +1,5 @@
 .header_div {
+    position: relative;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -37,4 +38,19 @@
   
 #header_gitforge:hover {
     color: #F1578F;
+}
+
+.header_navrotated {
+    animation: header_rotate-keyframes 0.5s;
+    transform: rotate(-90deg);
+}
+   
+@keyframes header_rotate-keyframes {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-90deg);
+    }
 }

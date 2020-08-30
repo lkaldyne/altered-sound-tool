@@ -18,11 +18,12 @@ export class Header extends React.Component {
         this.setState(prevState => ({
             navOpen: !prevState.navOpen
         }));
+        this.props.toggleNav();
     }
 
     render() {
         let titleElement = this.props.isHomePage ? (<div></div>) : (
-            <div style={{ margin: '15px' }}>
+            <div style={{ margin: '15px 15px 15px 35px' }}>
                 <Logo />
             </div>
         )
@@ -35,7 +36,11 @@ export class Header extends React.Component {
                         <FaGithub size="30" />
                     </a>
 
-                    <div id="header_navbutton" className="header_userInfoSectionElem">
+                    <div
+                        id="header_navbutton"
+                        className={`header_userInfoSectionElem ${this.state.navOpen ? "header_navrotated" : ""}`}
+                        onClick={this.toggle}
+                    >
                         <Icon
                             icon={hamburgerMenu}
                             width="59px"

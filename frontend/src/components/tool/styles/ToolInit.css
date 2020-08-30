@@ -1,0 +1,27 @@
+.toolinit_maindiv {
+    width: 90%;
+    height: 100%;
+}
+
+.toolinit_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.toolinit_title {
+    display: flex;
+    margin-right: 40px;
+}
+
+.toolinit_titletext {
+    color: white;
+    font-family: oswald;
+    font-size: 35px;
+}
+
+.toolinit_subtitletext {
+    color: white;
+    font-family: oswald;
+    font-size: 20px;
+}

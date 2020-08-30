@@ -25,3 +25,47 @@
     font-family: oswald;
     font-size: 20px;
 }
+
+.toolinit_instructionswrapper {
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    color: #8C8BBF;
+    height: auto;
+}
+
+.toolinit_instruction {
+    display: flex;
+    flex-direction: column;
+    margin: 0 25px 0 25px;
+    width: 400px;
+}
+
+.toolinit_instructioncount {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.toolinit_instructioncounttext {
+    font-family: oswald;
+    font-size: 35px;
+}
+
+.toolinit_instructionbox {
+    border: 2pt solid;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 0 25px 0;
+}
+
+.toolinit_instructionboxrow {
+    display: flex;
+    justify-content: center;
+}
+
+.toolinit_instructionboxtext {
+    font-family: oswald;
+    font-size: 25px;
+}

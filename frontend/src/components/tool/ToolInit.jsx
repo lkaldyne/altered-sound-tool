@@ -1,4 +1,8 @@
 import React from 'react'
+import { Icon } from '@iconify/react';
+import uploadOutlined from '@iconify/icons-ant-design/upload-outlined';
+import downloadOutlined from '@iconify/icons-ant-design/download-outlined';
+import settingsAdjust from '@iconify/icons-carbon/settings-adjust';
 import './styles/ToolInit.css'
 
 export class ToolInit extends React.Component {
@@ -25,12 +29,44 @@ export class ToolInit extends React.Component {
                             <p className="toolinit_instructioncounttext">1.</p>
                         </div>
                         <div className="toolinit_instructionbox">
-                            <p>Upload Audio File</p>
-                            {/* icon */}
+                            <div className="toolinit_instructionboxrow">
+                                <p className="toolinit_instructionboxtext">Upload Audio File</p>
+                            </div>
+                            <div className="toolinit_instructionboxrow">
+                                <Icon icon={uploadOutlined} width="37px" height="33px" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="toolinit_instruction">
+                        <div className="toolinit_instructioncount">
+                            <p className="toolinit_instructioncounttext">2.</p>
+                        </div>
+                        <div className="toolinit_instructionbox">
+                            <div className="toolinit_instructionboxrow">
+                                <p className="toolinit_instructionboxtext">Modify</p>
+                            </div>
+                            <div className="toolinit_instructionboxrow">
+                                <Icon icon={settingsAdjust} width="37px" height="33px" />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="toolinit_instruction">
+                        <div className="toolinit_instructioncount">
+                            <p className="toolinit_instructioncounttext">3.</p>
+                        </div>
+                        <div className="toolinit_instructionbox">
+                            <div className="toolinit_instructionboxrow">
+                                <p className="toolinit_instructionboxtext">Download</p>
+                            </div>
+                            <div className="toolinit_instructionboxrow">
+                                <Icon icon={downloadOutlined} width="37px" height="33px" />
+                            </div>
                         </div>
                     </div>
                 </div>
+                <div className="toolinit_startbutton" onClick={() => this.props.invokeNextStage(false)}>
 
+                </div>
             </div>
         );
     }

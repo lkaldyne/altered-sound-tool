@@ -35,6 +35,8 @@
     ]
   },
   "devDependencies": {
+    "@iconify/icons-ant-design": "^1.0.8",
+    "@iconify/icons-carbon": "^1.0.4",
     "@iconify/icons-cil": "^1.0.4",
     "@iconify/react": "^1.1.3",
     "css-loader": "^4.2.2",

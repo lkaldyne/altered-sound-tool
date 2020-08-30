@@ -1,0 +1,23 @@
+.homepage_div {
+    position: relative;
+    top: 0;
+    left:0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: top;
+    background: rgba(0,0,0,0);
+}
+
+.homepage_logowrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #110631;
+    height: 100px;
+    width: 500px;
+    border-radius: 8px;
+    border: 1pt solid white;
+    margin-top: 150px;
+}

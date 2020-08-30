@@ -54,7 +54,7 @@ const LogoStyle = {
 
 const LogoElemStyle = {
     display: "flex",
-    margin: "0 0 0 20px",
+    margin: "0",
     justifyContent: "flex-start",
     alignItems: 'center'
 

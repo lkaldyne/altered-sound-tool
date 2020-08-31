@@ -1,0 +1,14 @@
+.buttongeneral {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2pt solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.5s;
+}
+
+.buttongeneral:hover {
+    background: white;
+    color: black;
+}

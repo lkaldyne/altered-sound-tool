@@ -1,6 +1,6 @@
 .toolinit_maindiv {
     width: 90%;
-    height: 100%;
+    height: auto;
 }
 
 .toolinit_header {
@@ -50,6 +50,7 @@
 .toolinit_instructioncounttext {
     font-family: oswald;
     font-size: 35px;
+    margin: 0 0 10px 0;
 }
 
 .toolinit_instructionbox {
@@ -66,6 +67,19 @@
 }
 
 .toolinit_instructionboxtext {
+    font-family: oswald;
+    font-size: 25px;
+}
+
+.toolinit_startbutton {
+    display: flex;
+    justify-content: center;
+    margin-top: 100px;
+    color: white;
+}
+
+.toolinit_startbuttontext {
+    /* color: white; */
     font-family: oswald;
     font-size: 25px;
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Icon } from '@iconify/react';
+import { Button } from '../Button'
 import uploadOutlined from '@iconify/icons-ant-design/upload-outlined';
 import downloadOutlined from '@iconify/icons-ant-design/download-outlined';
 import settingsAdjust from '@iconify/icons-carbon/settings-adjust';
@@ -64,10 +65,18 @@ export class ToolInit extends React.Component {
                         </div>
                     </div>
                 </div>
-                <div className="toolinit_startbutton" onClick={() => this.props.invokeNextStage(false)}>
-
+                <div className="toolinit_startbutton" >
+                    <Button
+                        width="250px"
+                        height="65px"
+                        background="rgba(0,0,0,0)"
+                        clicked={this.props.invokeNextStage}
+                        clickedarg={false}
+                    >
+                        <p className="toolinit_startbuttontext">Start Editing</p>
+                    </Button>
                 </div>
-            </div>
+            </div >
         );
     }
 }

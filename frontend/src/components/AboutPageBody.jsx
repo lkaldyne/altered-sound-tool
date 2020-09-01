@@ -1,5 +1,4 @@
 import React from 'react'
-import { Logo } from './Logo';
 import './styles/AboutPageBody.css'
 
 export class AboutPageBody extends React.Component {

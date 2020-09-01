@@ -16,7 +16,6 @@ export class Logo extends React.Component {
                     <div style={Object.assign({}, LogoElemStyle, { margin: '0 0 5px 10px' })}>
                         <div style={{ margin: '0' }}>
                             <p style={{
-                                fontFamily: 'oswald',
                                 fontSize: '40px',
                                 color: '#F1578F'
                             }}>ALTERED</p>
@@ -32,7 +31,6 @@ export class Logo extends React.Component {
                         </div>
                         <div style={{ margin: '0' }}>
                             <p style={{
-                                fontFamily: 'oswald',
                                 fontSize: '40px',
                                 color: '#57D6F1'
                             }}>SOUND</p>

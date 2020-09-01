@@ -1,0 +1,49 @@
+.toolmodify_maindiv {
+    width: 90%;
+    height: auto;
+}
+
+.toolmodify_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.toolmodify_title {
+    display: flex;
+    margin-right: 20px;
+}
+
+.toolmodify_titletext {
+    color: white;
+    font-size: 35px;
+}
+
+.toolmodify_filenametext {
+    color: #57D6F1;
+    font-size: 35px;
+}
+
+.toolmodify_modbox {
+    width: 100%;
+    height: 60%;
+    border: 2pt solid #57D6F1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+}
+
+.toolmodify_settingwrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    color: white;
+}
+
+.toolmodify_settingtitle {
+    margin: 0 20px 0 20px;
+}
+
+.toolmodify_settingtitletext {
+    font-size: 20px;
+}

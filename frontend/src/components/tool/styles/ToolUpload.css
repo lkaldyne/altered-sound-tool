@@ -1,0 +1,113 @@
+.toolupload_maindiv {
+    width: 90%;
+    height: auto;
+}
+
+.toolupload_header {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.toolupload_title {
+    display: flex;
+    margin-right: 40px;
+}
+
+.toolupload_titletext {
+    color: white;
+    font-size: 35px;
+}
+
+.toolupload_itemwrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.toolupload_uploadbox {
+    width: 800px;
+    height: 250px;
+    border: 2pt dashed #80D0E1;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    color: #80D0E1;
+    justify-content: space-around;
+    cursor: pointer;
+}
+
+.toolupload_uploadboxchild {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.toolupload_uploadinstructionstext {
+    font-size: 25px;
+}
+
+.toolupload_dropzonedata {
+    margin-top: 20px;
+    width: 800px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.5s;
+    color: white;
+    border-radius: 8px;
+    border: 1pt solid white;
+}
+
+.toolupload_dropzonedatavalid {
+    background: rgb(23, 56, 3);
+}
+
+.toolupload_dropzonedatainvalid {
+    background: rgb(80, 7, 7);
+}
+
+.toolupload_fileinfo {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.toolupload_musicicon {
+    margin-right: 10px;
+}
+
+.toolupload_filenametext {
+    font-size: 20px;
+}
+
+.toolupload_filedelete {
+    transition: 0.5s;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.toolupload_filedelete:hover {
+    color: #F1578F;
+}
+
+.toolupload_fileinputelem {
+    display: none;
+}
+
+.toolupload_finalize {
+    margin-top: 20px;
+    width: 800px;
+    height: 50px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    color: white;
+}
+
+.toolupload_finalizebutton {
+    border-radius: 8px;
+    border: 2pt solid white;
+}

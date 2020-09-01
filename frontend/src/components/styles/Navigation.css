@@ -39,7 +39,6 @@
     display: flex;
     text-decoration: none;
     color: white;
-    font-family: oswald;
     font-size: 25px;
     padding: 50px 0 50px 0;
     background: rgba(0,0,0,0);
@@ -52,7 +51,6 @@
     display: flex;
     text-decoration: none;
     color: white;
-    font-family: oswald;
     font-size: 25px;
     padding: 50px 0 50px 0;
     background: linear-gradient(90deg, rgba(0,0,0,0), #B82C2C);

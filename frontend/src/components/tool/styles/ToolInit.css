@@ -16,13 +16,11 @@
 
 .toolinit_titletext {
     color: white;
-    font-family: oswald;
     font-size: 35px;
 }
 
 .toolinit_subtitletext {
     color: white;
-    font-family: oswald;
     font-size: 20px;
 }
 
@@ -48,7 +46,6 @@
 }
 
 .toolinit_instructioncounttext {
-    font-family: oswald;
     font-size: 35px;
     margin: 0 0 10px 0;
 }
@@ -67,7 +64,6 @@
 }
 
 .toolinit_instructionboxtext {
-    font-family: oswald;
     font-size: 25px;
 }
 
@@ -79,7 +75,5 @@
 }
 
 .toolinit_startbuttontext {
-    /* color: white; */
-    font-family: oswald;
     font-size: 25px;
 }

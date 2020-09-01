@@ -8,6 +8,26 @@
     transition: 0.5s;
 }
 
+.buttondisabled {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    cursor: not-allowed;
+    background: grey;
+    color: black;
+}
+
+.buttonloading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2pt solid white;
+    border-radius: 8px;
+    cursor: default;
+    background: white;
+}
+
 .buttongeneral:hover {
     background: white;
     color: black;

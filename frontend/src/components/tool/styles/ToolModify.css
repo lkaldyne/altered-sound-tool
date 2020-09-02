@@ -37,6 +37,7 @@
     width: 100%;
     display: flex;
     justify-content: flex-start;
+    align-items: center;
     color: white;
 }
 
@@ -46,4 +47,53 @@
 
 .toolmodify_settingtitletext {
     font-size: 20px;
+}
+
+.toolmodify_settingslidercontainer {
+    width: 50%;
+}
+
+.toolmodify_settingslider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    box-shadow: 0 1px 10px 1px black;
+}
+
+.toolmodify_settingslider:hover {
+    opacity: 1;
+}
+
+.toolmodify_settingslider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 8px;
+    height: 25px;
+    background: #F1578F;
+}
+
+.toolmodify_settingslidervalue {
+    width: 80px;
+    margin-left: 20px;
+    transition: 0.3s;
+    border-bottom: 1pt solid white;
+}
+
+.toolmodify_settingslidervalue input {
+    background-color: transparent;
+    border: 0px solid;
+    outline: none;
+    width: 100%;
+    margin: 0 0 5px 0;
+    font-size: 25px;
+    color: white;
+    transition: 0.3s;
+}
+
+.toolmodify_settingslidervalue input:hover {
+    color: #F1578F;
 }

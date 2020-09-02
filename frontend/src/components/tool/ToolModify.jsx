@@ -1,14 +1,20 @@
 import React from 'react'
 import './styles/ToolModify.css'
 
+// This could get pretty long and tedious as the number of audio
+// settings increase, should probably find a better way to store these values
+const audiospeedmin = 0.1;
+const audiospeedmax = 10;
+const audiospeeddefault = 1;
+
 export class ToolModify extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            audiospeed: 1,
-            audiospeedinput: "1x"
+            audiospeed: audiospeeddefault,
+            audiospeedinput: `${audiospeeddefault}x`
         }
     }
 
@@ -18,10 +24,16 @@ export class ToolModify extends React.Component {
         // or maybe the state itself can be reshaped to be more modular (perhaps hashmap with str keys?)
         let sanitized = this.state.audiospeedinput.replace('x', '');
         if (sanitized.length > 0 && !isNaN(sanitized)) {
-            if (sanitized > 10) {
+            if (sanitized > audiospeedmax) {
                 this.setState({
-                    audiospeed: 10,
-                    audiospeedinput: "10x"
+                    audiospeed: audiospeedmax,
+                    audiospeedinput: `${audiospeedmax}x`
+                });
+            }
+            else if (sanitized < audiospeedmin) {
+                this.setState({
+                    audiospeed: 0.1,
+                    audiospeedinput: `${audiospeedmin}x`
                 });
             }
             else {
@@ -33,8 +45,8 @@ export class ToolModify extends React.Component {
         }
         else {
             this.setState({
-                audiospeed: 1,
-                audiospeedinput: "1x"
+                audiospeed: audiospeeddefault,
+                audiospeedinput: `${audiospeeddefault}x`
             })
         }
     }
@@ -52,14 +64,14 @@ export class ToolModify extends React.Component {
                 </div>
                 <div className="toolmodify_modbox">
                     <div className="toolmodify_settingwrapper">
-                        <div className="toolmodify_settingtitle" onClick={() => console.log(this.state.audiospeed)}>
+                        <div className="toolmodify_settingtitle">
                             <p className="toolmodify_settingtitletext">Audio Speed:</p>
                         </div>
                         <div className="toolmodify_settingslidercontainer">
                             <input
                                 type="range"
-                                min={0.1}
-                                max={10}
+                                min={audiospeedmin}
+                                max={audiospeedmax}
                                 value={this.state.audiospeed}
                                 // the below code should be handled by a generic function, same as above comment
                                 onChange={(e) => this.setState({

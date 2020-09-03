@@ -1,11 +1,6 @@
 import React from 'react'
 import './styles/ToolModify.css'
-
-// This could get pretty long and tedious as the number of audio
-// settings increase, should probably find a better way to store these values
-const audiospeedmin = 0.1;
-const audiospeedmax = 10;
-const audiospeeddefault = 1;
+import { audiosettings } from './ToolSettingDefaults'
 
 export class ToolModify extends React.Component {
 
@@ -13,41 +8,43 @@ export class ToolModify extends React.Component {
         super(props);
 
         this.state = {
-            audiospeed: audiospeeddefault,
-            audiospeedinput: `${audiospeeddefault}x`
+            settingvalues: {
+                "audiospeed": {
+                    "value": audiosettings["default"],
+                    "display": `${audiosettings["default"]}${audiosettings["suffix"]}`,
+                }
+            }
         }
     }
 
-    finalizeinput = () => {
-        // to do: make this function generic, should not be specific to audiospeed, 'x', etc.
-        // Maybe the state var to be modified can be passed in as an arg (doubt it),
-        // or maybe the state itself can be reshaped to be more modular (perhaps hashmap with str keys?)
-        let sanitized = this.state.audiospeedinput.replace('x', '');
+    updateStateForSetting = (settingkey, newVal, suffix, onlyDisplay = false) => {
+        let newstate = this.state;
+        if (!onlyDisplay) {
+            newstate.settingvalues[settingkey]["value"] = newVal;
+            newstate.settingvalues[settingkey]["display"] = `${newVal}${suffix}`;
+        }
+        else {
+            newstate.settingvalues[settingkey]["display"] = newVal;
+        }
+
+        this.setState(newstate);
+    }
+
+    finalizeinput = (settingkey, setting) => {
+        let sanitized = this.state.settingvalues[settingkey]["display"].replace(setting["suffix"], '');
         if (sanitized.length > 0 && !isNaN(sanitized)) {
-            if (sanitized > audiospeedmax) {
-                this.setState({
-                    audiospeed: audiospeedmax,
-                    audiospeedinput: `${audiospeedmax}x`
-                });
+            if (sanitized > setting["max"]) {
+                this.updateStateForSetting(settingkey, setting["max"], setting["suffix"])
             }
-            else if (sanitized < audiospeedmin) {
-                this.setState({
-                    audiospeed: 0.1,
-                    audiospeedinput: `${audiospeedmin}x`
-                });
+            else if (sanitized < setting["min"]) {
+                this.updateStateForSetting(settingkey, setting["min"], setting["suffix"])
             }
             else {
-                this.setState({
-                    audiospeed: parseFloat(sanitized),
-                    audiospeedinput: `${sanitized}x`
-                });
+                this.updateStateForSetting(settingkey, parseFloat(sanitized), setting["suffix"])
             }
         }
         else {
-            this.setState({
-                audiospeed: audiospeeddefault,
-                audiospeedinput: `${audiospeeddefault}x`
-            })
+            this.updateStateForSetting(settingkey, setting["default"], setting["suffix"])
         }
     }
 
@@ -70,14 +67,10 @@ export class ToolModify extends React.Component {
                         <div className="toolmodify_settingslidercontainer">
                             <input
                                 type="range"
-                                min={audiospeedmin}
-                                max={audiospeedmax}
-                                value={this.state.audiospeed}
-                                // the below code should be handled by a generic function, same as above comment
-                                onChange={(e) => this.setState({
-                                    audiospeed: parseFloat(e.target.value),
-                                    audiospeedinput: `${e.target.value}x`
-                                })}
+                                min={audiosettings["min"]}
+                                max={audiosettings["max"]}
+                                value={this.state.settingvalues["audiospeed"]["value"]}
+                                onChange={(e) => this.updateStateForSetting("audiospeed", parseFloat(e.target.value), audiosettings["suffix"])}
                                 step={0.1}
                                 className="toolmodify_settingslider" />
                         </div>
@@ -85,10 +78,9 @@ export class ToolModify extends React.Component {
                             <input
                                 type="text"
                                 maxLength="4"
-                                value={this.state.audiospeedinput}
-                                // same here
-                                onChange={(e) => this.setState({ audiospeedinput: e.target.value })}
-                                onBlur={this.finalizeinput}
+                                value={this.state.settingvalues["audiospeed"]["display"]}
+                                onChange={(e) => this.updateStateForSetting("audiospeed", e.target.value, audiosettings["suffix"], true)}
+                                onBlur={() => this.finalizeinput("audiospeed", audiosettings)}
                             />
                         </div>
                     </div>

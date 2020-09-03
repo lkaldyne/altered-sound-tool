@@ -1,13 +1,12 @@
 .buttonwrapper {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: top;
     border-radius: 8px;
 }
 
 .buttongeneral {
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -19,7 +18,6 @@
 
 .buttondisabled {
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -31,7 +29,6 @@
 
 .buttonloading {
     width: 100%;
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;

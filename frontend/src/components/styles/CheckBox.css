@@ -1,0 +1,16 @@
+.checkbox_box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 8px;
+    border: 2pt solid white;
+    cursor: pointer;
+    transition: 0.3s;
+    overflow: visible;
+}
+
+.checkbox_box:hover {
+    background: rgb(117, 17, 17);
+}

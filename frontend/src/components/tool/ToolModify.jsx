@@ -1,6 +1,17 @@
 import React from 'react'
 import './styles/ToolModify.css'
-import { audiosettings } from './ToolSettingDefaults'
+import { SliderAndInput } from '../SliderAndInput'
+
+import {
+    audiospeedsettings,
+    pitchshiftsettings,
+    sizereductionsettings,
+    deepfrysettings,
+    distortionsettings
+} from './ToolSettingDefaults'
+
+import { CheckBox } from '../CheckBox';
+import { Button } from '../Button';
 
 export class ToolModify extends React.Component {
 
@@ -8,44 +19,17 @@ export class ToolModify extends React.Component {
         super(props);
 
         this.state = {
-            settingvalues: {
-                "audiospeed": {
-                    "value": audiosettings["default"],
-                    "display": `${audiosettings["default"]}${audiosettings["suffix"]}`,
-                }
-            }
+            isUploading: false
         }
     }
 
-    updateStateForSetting = (settingkey, newVal, suffix, onlyDisplay = false) => {
-        let newstate = this.state;
-        if (!onlyDisplay) {
-            newstate.settingvalues[settingkey]["value"] = newVal;
-            newstate.settingvalues[settingkey]["display"] = `${newVal}${suffix}`;
-        }
-        else {
-            newstate.settingvalues[settingkey]["display"] = newVal;
-        }
-
-        this.setState(newstate);
+    statechanged = () => {
+        return true;
     }
 
-    finalizeinput = (settingkey, setting) => {
-        let sanitized = this.state.settingvalues[settingkey]["display"].replace(setting["suffix"], '');
-        if (sanitized.length > 0 && !isNaN(sanitized)) {
-            if (sanitized > setting["max"]) {
-                this.updateStateForSetting(settingkey, setting["max"], setting["suffix"])
-            }
-            else if (sanitized < setting["min"]) {
-                this.updateStateForSetting(settingkey, setting["min"], setting["suffix"])
-            }
-            else {
-                this.updateStateForSetting(settingkey, parseFloat(sanitized), setting["suffix"])
-            }
-        }
-        else {
-            this.updateStateForSetting(settingkey, setting["default"], setting["suffix"])
-        }
+    finalize = () => {
+        this.setState({ isUploading: true });
+        this.props.invokeNextStage(false);
     }
 
     render() {
@@ -62,28 +46,100 @@ export class ToolModify extends React.Component {
                 <div className="toolmodify_modbox">
                     <div className="toolmodify_settingwrapper">
                         <div className="toolmodify_settingtitle">
-                            <p className="toolmodify_settingtitletext">Audio Speed:</p>
+                            <p className="toolmodify_settingtext">Audio Speed:</p>
                         </div>
-                        <div className="toolmodify_settingslidercontainer">
-                            <input
-                                type="range"
-                                min={audiosettings["min"]}
-                                max={audiosettings["max"]}
-                                value={this.state.settingvalues["audiospeed"]["value"]}
-                                onChange={(e) => this.updateStateForSetting("audiospeed", parseFloat(e.target.value), audiosettings["suffix"])}
-                                step={0.1}
-                                className="toolmodify_settingslider" />
+                        <SliderAndInput
+                            settings={audiospeedsettings}
+                            maxLength={4}
+                            step={0.1}
+                        />
+                    </div>
+                    <div className="toolmodify_settingwrapper">
+                        <div className="toolmodify_settingtitle">
+                            <p className="toolmodify_settingtext">Pitch Shift:</p>
                         </div>
-                        <div className="toolmodify_settingslidervalue">
-                            <input
-                                type="text"
-                                maxLength="4"
-                                value={this.state.settingvalues["audiospeed"]["display"]}
-                                onChange={(e) => this.updateStateForSetting("audiospeed", e.target.value, audiosettings["suffix"], true)}
-                                onBlur={() => this.finalizeinput("audiospeed", audiosettings)}
-                            />
+                        <SliderAndInput
+                            settings={pitchshiftsettings}
+                            maxLength={3}
+                            step={1}
+                        />
+                        <div className="toolmodify_settingcomment">
+                            <p className="toolmodify_settingtext">(Semitones)</p>
                         </div>
                     </div>
+                    <div className="toolmodify_settingwrapper">
+                        <div className="toolmodify_settingtitle">
+                            <p className="toolmodify_settingtext">Reduce Size:</p>
+                        </div>
+                        <SliderAndInput
+                            settings={sizereductionsettings}
+                            maxLength={3}
+                            step={1}
+                        />
+                        <div className="toolmodify_settingcomment">
+                            <p className="toolmodify_settingtext">(100% = Original Size)</p>
+                        </div>
+                    </div>
+                    <div className="toolmodify_settingwrapper">
+                        <div className="toolmodify_settingtitle">
+                            <p className="toolmodify_settingtext">Deep Fry:</p>
+                        </div>
+                        <SliderAndInput
+                            settings={deepfrysettings}
+                            maxLength={3}
+                            step={1}
+                        />
+                        <div className="toolmodify_settingcomment">
+                            <p className="toolmodify_settingtext">(0% = None, 100% = Maximum Fry)</p>
+                        </div>
+                    </div>
+                    <div className="toolmodify_settingwrapper">
+                        <div className="toolmodify_settingtitle">
+                            <p className="toolmodify_settingtext">Distortion:</p>
+                        </div>
+                        <SliderAndInput
+                            settings={distortionsettings}
+                            maxLength={3}
+                            step={1}
+                        />
+                        <div className="toolmodify_settingcomment">
+                            <p className="toolmodify_settingtext">(0% = None, 100% = Maximum Distortion)</p>
+                        </div>
+                    </div>
+                    <div className="toolmodify_settingwrapper">
+                        <div className="toolmodify_settingtitle">
+                            <p className="toolmodify_settingtext">Chordify:</p>
+                        </div>
+                        <div className="toolmodify_checkboxwrapper">
+                            <CheckBox />
+                        </div>
+                        <div className="toolmodify_settingcomment">
+                            <p className="toolmodify_settingtext">(The harmonies are otherworldly!)</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="toolmodify_footer">
+                    <Button
+                        width="200px"
+                        height="50px"
+                        disabled={false}
+                        loading={this.state.isUploading}
+                        clicked={() => this.props.invokeNextStage(true)}
+                    >
+                        <p className="toolmodify_buttontext">Cancel</p>
+                    </Button>
+                    <Button
+                        width="200px"
+                        height="50px"
+                        disabled={!this.statechanged()}
+                        loading={this.state.isUploading}
+                        clicked={this.finalize}
+                        bckg="#57D6F1"
+                        margin="0 0 0 15px"
+                        textcolor="black"
+                    >
+                        <p className="toolmodify_buttontext">Finish</p>
+                    </Button>
                 </div>
             </div>
         );

@@ -29,8 +29,8 @@ export class ToolModify extends React.Component {
     }
 
     finalize = () => {
-        this.setState({ isUploading: true });
-        // this.props.invokeNextStage(false);
+        // this.setState({ isUploading: true });
+        this.props.invokeNextStage(false);
     }
 
     render() {

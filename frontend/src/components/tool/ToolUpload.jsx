@@ -85,10 +85,10 @@ export class ToolUpload extends React.Component {
 
     uploadFile = () => {
         // axios api post logic
-        this.setState(prevState => ({
-            isUploading: true
-        }));
-        // this.props.invokeNextStage(false);
+        // this.setState(prevState => ({
+        //     isUploading: true
+        // }));
+        this.props.invokeNextStage(false);
     }
 
     render() {

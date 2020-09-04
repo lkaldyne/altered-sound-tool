@@ -17,7 +17,7 @@ export class ToolPageBody extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cur_stage: tool_stages.MODIFY
+            cur_stage: tool_stages.INIT
         }
     }
 

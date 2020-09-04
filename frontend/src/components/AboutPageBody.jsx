@@ -9,6 +9,7 @@ export class AboutPageBody extends React.Component {
 
     render() {
         return (
+            // To do: Create bio for this page 
             <div className="aboutpage_div">
             </div>
         );

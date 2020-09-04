@@ -1,0 +1,30 @@
+.toolprocessing_maindiv {
+    width: 90%;
+    height: auto;
+}
+
+.toolprocessing_loadingwrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+.toolprocessing_loadingcontent {
+    display: flex;
+    flex-direction: column;
+}
+
+.toolprocessing_loadingitem {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.toolprocessing_loadingitem p {
+    font-size: 25px;
+    margin-left: 10px;
+}
+

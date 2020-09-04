@@ -2,7 +2,6 @@ import React from 'react'
 import { ToolInit } from '../components/tool/ToolInit'
 import { ToolUpload } from '../components/tool/ToolUpload'
 import { ToolModify } from '../components/tool/ToolModify'
-import { ToolProcessing } from '../components/tool/ToolProcessing'
 import { ToolComplete } from '../components/tool/ToolComplete'
 import './styles/ToolPageBody.css'
 
@@ -10,8 +9,7 @@ const tool_stages = {
     INIT: 0,
     UPLOAD: 1,
     MODIFY: 2,
-    PROCESSING: 3,
-    COMPLETE: 4
+    COMPLETE: 3
 }
 
 export class ToolPageBody extends React.Component {
@@ -19,7 +17,7 @@ export class ToolPageBody extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cur_stage: tool_stages.INIT
+            cur_stage: tool_stages.MODIFY
         }
     }
 
@@ -41,9 +39,6 @@ export class ToolPageBody extends React.Component {
                 break;
             case tool_stages.MODIFY:
                 page = <ToolModify invokeNextStage={this.nextStage} />
-                break;
-            case tool_stages.PROCESSING:
-                page = <ToolProcessing invokeNextStage={this.nextStage} />
                 break;
             case tool_stages.COMPLETE:
                 page = <ToolComplete invokeNextStage={this.nextStage} />

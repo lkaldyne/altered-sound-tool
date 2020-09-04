@@ -1,4 +1,5 @@
 import React from 'react'
+import { ToolProcessing } from './ToolProcessing'
 import './styles/ToolModify.css'
 import { SliderAndInput } from '../SliderAndInput'
 
@@ -29,11 +30,11 @@ export class ToolModify extends React.Component {
 
     finalize = () => {
         this.setState({ isUploading: true });
-        this.props.invokeNextStage(false);
+        // this.props.invokeNextStage(false);
     }
 
     render() {
-        return (
+        let mainpage =
             <div className="toolmodify_maindiv">
                 <div className="toolmodify_header">
                     <div className="toolmodify_title">
@@ -122,8 +123,6 @@ export class ToolModify extends React.Component {
                     <Button
                         width="200px"
                         height="50px"
-                        disabled={false}
-                        loading={this.state.isUploading}
                         clicked={() => this.props.invokeNextStage(true)}
                     >
                         <p className="toolmodify_buttontext">Cancel</p>
@@ -132,7 +131,6 @@ export class ToolModify extends React.Component {
                         width="200px"
                         height="50px"
                         disabled={!this.statechanged()}
-                        loading={this.state.isUploading}
                         clicked={this.finalize}
                         bckg="#57D6F1"
                         margin="0 0 0 15px"
@@ -142,6 +140,19 @@ export class ToolModify extends React.Component {
                     </Button>
                 </div>
             </div>
+
+        // --------------------------------------------------------------------------
+
+        return (
+            <React.Fragment>
+                {
+                    this.state.isUploading ?
+                        <ToolProcessing />
+                        :
+                        mainpage
+                }
+            </React.Fragment>
+
         );
     }
 }

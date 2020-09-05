@@ -1,4 +1,5 @@
 import React from 'react'
+import { modDeltas } from './tool/ToolModify'
 import './styles/SliderAndInput.css'
 
 export class SliderAndInput extends React.Component {
@@ -15,6 +16,17 @@ export class SliderAndInput extends React.Component {
     updateStateForSetting = (newVal, suffix, onlyDisplay = false) => {
         let newstate = this.state;
         if (!onlyDisplay) {
+            let def = this.props.settings["default"]
+            if (newVal != def && this.state.value === def) {
+                this.props.onChange(modDeltas.INCREASE, this.props.settingName, newVal);
+            }
+            else if (newVal === def && this.state.value != def) {
+                this.props.onChange(modDeltas.DECREASE, this.props.settingName, newVal);
+            }
+            else {
+                this.props.onChange(modDeltas.NEUTRAL, this.props.settingName, newVal);
+            }
+
             newstate.value = newVal;
             newstate.display = `${newVal}${suffix}`;
         }

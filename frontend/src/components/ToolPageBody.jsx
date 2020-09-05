@@ -17,7 +17,9 @@ export class ToolPageBody extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            cur_stage: tool_stages.INIT
+            cur_stage: tool_stages.INIT,
+            apiKey: "",
+            filename: ""
         }
     }
 
@@ -28,6 +30,13 @@ export class ToolPageBody extends React.Component {
         }));
     }
 
+    updateFileData = (apiKey, filename) => {
+        this.setState(prevState => ({
+            apiKey: apiKey,
+            filename: filename
+        }));
+    }
+
     render() {
         let page;
         switch (this.state.cur_stage) {
@@ -35,10 +44,14 @@ export class ToolPageBody extends React.Component {
                 page = <ToolInit invokeNextStage={this.nextStage} />
                 break;
             case tool_stages.UPLOAD:
-                page = <ToolUpload invokeNextStage={this.nextStage} />
+                page = <ToolUpload invokeNextStage={this.nextStage} notifyParent={this.updateFileData} />
                 break;
             case tool_stages.MODIFY:
-                page = <ToolModify invokeNextStage={this.nextStage} />
+                page = <ToolModify
+                    invokeNextStage={this.nextStage}
+                    apiKey={this.state.apiKey}
+                    filename={this.state.filename}
+                />
                 break;
             case tool_stages.COMPLETE:
                 page = <ToolComplete invokeNextStage={this.nextStage} />

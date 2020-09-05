@@ -18,8 +18,13 @@ export class ToolUpload extends React.Component {
             currentFile: null,
             fileValid: true,
             isUploading: false,
-            uploadError: false
+            uploadError: false,
+            uniqueApiKey: ""
         }
+    }
+
+    generateKey = (pre) => {
+        return `${pre}_${new Date().getTime()}`;
     }
 
     clearFile = () => {
@@ -90,16 +95,24 @@ export class ToolUpload extends React.Component {
         }));
 
         // axios api post logic
-        axios.post('http://0.0.0.0:3000/upload', {
-            image: this.state.currentFile,
-            key: "0000000"
+        const formData = new FormData();
+        const generatedKey = this.generateKey(this.state.currentFile.name);
+        formData.append('audiofile', this.state.currentFile);
+        formData.append('key', generatedKey);
+        axios({
+            url: 'http://0.0.0.0:3000/upload',
+            method: "POST",
+            data: formData
         })
-            .then(() => this.props.invokeNextStage(false))
+            .then(() => {
+                this.props.notifyParent(generatedKey, this.state.currentFile.name);
+                this.props.invokeNextStage(false)
+            })
             .catch((e) => {
-                console.log(e);
                 this.setState(prevState => ({
                     uploadError: true,
-                    isUploading: false
+                    isUploading: false,
+                    uniqueApiKey: generatedKey
                 }));
             });
     }

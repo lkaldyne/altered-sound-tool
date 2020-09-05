@@ -111,3 +111,8 @@
     border-radius: 8px;
     border: 2pt solid white;
 }
+
+.toolupload_errormsg {
+    margin-right: 15px;
+    color: #F1578F;
+}

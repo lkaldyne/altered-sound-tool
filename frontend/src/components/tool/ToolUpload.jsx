@@ -17,7 +17,8 @@ export class ToolUpload extends React.Component {
         this.state = {
             currentFile: null,
             fileValid: true,
-            isUploading: false
+            isUploading: false,
+            uploadError: false
         }
     }
 
@@ -84,11 +85,23 @@ export class ToolUpload extends React.Component {
     }
 
     uploadFile = () => {
+        this.setState(prevState => ({
+            isUploading: true
+        }));
+
         // axios api post logic
-        // this.setState(prevState => ({
-        //     isUploading: true
-        // }));
-        this.props.invokeNextStage(false);
+        axios.post('http://0.0.0.0:3000/upload', {
+            image: this.state.currentFile,
+            key: "0000000"
+        })
+            .then(() => this.props.invokeNextStage(false))
+            .catch((e) => {
+                console.log(e);
+                this.setState(prevState => ({
+                    uploadError: true,
+                    isUploading: false
+                }));
+            });
     }
 
     render() {
@@ -160,6 +173,15 @@ export class ToolUpload extends React.Component {
 
                 <div className="toolupload_itemwrapper">
                     <div className="toolupload_finalize">
+                        {
+                            this.state.uploadError ?
+                                <div className="toolupload_errormsg">
+                                    <p className="toolupload_filenametext">There was an error uploading this file. Try again later</p>
+                                </div>
+                                :
+                                ""
+                        }
+
                         <Button
                             width="200px"
                             height="50px"

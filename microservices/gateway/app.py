@@ -1,16 +1,26 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS, cross_origin
+from werkzeug.utils import secure_filename
 import os
 import requests
+
+UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
+ALLOWED_EXTENSIONS = {'wav', 'mp3'}
 
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
 dependencies = [
     (os.environ['SOUNDUTILS_HOST'], os.environ['SOUNDUTILS_PORT'])
 ]
+
+
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
 @app.route('/healthstatus')
@@ -25,20 +35,40 @@ def index():
 @app.route('/upload', methods=['POST'])
 @cross_origin()
 def receive_audio_file():
-    data = request.get_json()
-    # print(data, flush=True)
+    file = request.files.get('audiofile')
+    apikey = request.form.get('key')
 
-    if not data:
-        return "Error: did not provide any data", 400
+    # print(file.filename, flush=True)
+    # print(file, flush=True)
 
-    # Run img binary thru librosa methods and save as wav file
+    if not file or file.filename == '':
+        return "Error: did not provide any file", 400
 
-    return jsonify(status="File Successfully Uploaded")
+    if not apikey or len(apikey) < 4:
+        return "Error: did not provide valid key", 400
+
+    if allowed_file(file.filename):
+        filename = secure_filename(file.filename)
+        try:
+            os.makedirs(os.path.join(UPLOAD_FOLDER, apikey))
+        except OSError:
+            return "Error: did not provide unique key", 400  # dir already exists
+
+        file.save(os.path.join(
+            app.config['UPLOAD_FOLDER'], apikey, filename))
+
+        return jsonify(status="File Successfully Uploaded")
+    else:
+        return "Error: File name not valid", 400
 
 
 @app.route('/mod', methods=['POST'])
 def modify_audio():
-    pass
+    data = request.get_json()
+
+    print(data, flush=True)
+
+    return jsonify(status="File Successfully Uploaded")
 
 
 if __name__ == '__main__':

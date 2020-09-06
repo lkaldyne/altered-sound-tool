@@ -23,6 +23,15 @@ export const modDeltas = {
     DECREASE: 2
 }
 
+const defaultSettings = {
+    "audiospeed": audiospeedsettings['default'],
+    "pitchshift": pitchshiftsettings['default'],
+    "sizereduction": sizereductionsettings['default'],
+    "deepfry": deepfrysettings['default'],
+    "distortion": distortionsettings['default'],
+    "chordify": false
+}
+
 export class ToolModify extends React.Component {
 
     constructor(props) {
@@ -31,14 +40,7 @@ export class ToolModify extends React.Component {
         this.state = {
             isUploading: false,
             uploadError: false,
-            settings: {
-                "audiospeed": audiospeedsettings['default'],
-                "pitchshift": pitchshiftsettings['default'],
-                "sizereduction": sizereductionsettings['default'],
-                "deepfry": deepfrysettings['default'],
-                "distortion": distortionsettings['default'],
-                "chordify": false
-            },
+            settings: defaultSettings,
             changedSettings: 0
         }
     }
@@ -62,7 +64,9 @@ export class ToolModify extends React.Component {
         // axios api post logic
         axios.post('http://0.0.0.0:3000/mod', {
             'key': this.props.apiKey,
-            'settings': this.state.settings
+            'filename': this.props.filename,
+            'settings': this.state.settings,
+            'defaultSettings': defaultSettings
         })
             .then(res => {
                 // this.props.notifyParent(generatedKey, this.state.currentFile.name);

@@ -9,12 +9,12 @@ class SoundTools:
         return (data, sr)
 
     @staticmethod
-    def stretch(input_data, speed):
-        return librosa.effects.time_stretch(input_data, speed)
+    def stretch(args):
+        return librosa.effects.time_stretch(args['input_data'], args['amount'])
 
     @staticmethod
-    def pitch_shift(input_data, sr, numsteps):
-        return librosa.effects.pitch_shift(input_data, sr, n_steps=numsteps, bins_per_octave=24)
+    def pitch_shift(args):
+        return librosa.effects.pitch_shift(args['input_data'], args['sr'], n_steps=args['amount'], bins_per_octave=24)
 
     @staticmethod
     def save(input_data, sr, output_filename):

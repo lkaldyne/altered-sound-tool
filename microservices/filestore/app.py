@@ -26,7 +26,7 @@ def save_file():
     file = request.files.get('file')
     apikey = request.form.get('key')
 
-    print(file, flush=True)
+    # print(file, flush=True)
     # print(apikey, flush=True)
 
     if not file or file.filename == '':
@@ -35,6 +35,7 @@ def save_file():
     if not apikey or len(apikey) < 4:
         return "Error: did not provide valid key", 400
 
+    # To do: Should probably have better security than just checking extension in filename.
     if allowed_file(file.filename):
         filename = secure_filename(file.filename)
         dirname = secure_filename(apikey)
@@ -49,6 +50,11 @@ def save_file():
         return jsonify(status="File Successfully Saved")
     else:
         return "Error: File type not valid", 400
+
+
+@app.route('/get', methods=['GET'])
+def get_file():
+    pass
 
 
 if __name__ == '__main__':

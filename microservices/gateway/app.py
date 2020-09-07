@@ -7,6 +7,7 @@ import requests
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
+app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16Mb file size limit
 ENDPOINT_PREFIX = "http"
 
 
@@ -58,7 +59,7 @@ def receive_audio_file():
         'file': (file.filename, file)
     }
 
-    print(file, flush=True)
+    # print(file, flush=True)
 
     res = requests.post(
         url=dependencies['filestore'] + "/save", files=postfiles, data=postdata)

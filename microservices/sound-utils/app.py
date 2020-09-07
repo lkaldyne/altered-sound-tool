@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify
+from util.sound_tools import SoundTools
 
 app = Flask(__name__)
+ALLOWED_EXTENSIONS = {'wav', 'mp3'}
 
 
 @app.route('/healthstatus')

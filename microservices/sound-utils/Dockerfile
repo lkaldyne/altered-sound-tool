@@ -8,6 +8,10 @@ COPY . /usr/src/app
 
 RUN pip install -r Requirements.txt
 
+RUN apt-get update
+
+RUN apt-get install -y libsndfile1-dev
+
 EXPOSE 5000
 
 CMD ["python", "app.py"]

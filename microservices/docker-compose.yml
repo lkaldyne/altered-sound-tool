@@ -3,7 +3,7 @@ services:
   gateway:
     container_name: gateway_service
     restart: always
-    build: ./Gateway
+    build: ./gateway
     ports:
       - 3000:5000
     depends_on:
@@ -13,6 +13,8 @@ services:
     environment:
       SOUNDUTILS_HOST: soundutils
       SOUNDUTILS_PORT: 5000
+      FILESTORE_HOST: filestore
+      FILESTORE_PORT: 5000
 
   soundutils:
     container_name: sound_utils_service
@@ -20,6 +22,15 @@ services:
     build: ./sound-utils
     ports:
       - "3001:5000"
+    networks:
+      - service_network
+
+  filestore:
+    container_name: file_storage_service
+    restart: always
+    build: ./filestore
+    ports:
+      - "3002:5000"
     networks:
       - service_network
 

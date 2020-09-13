@@ -1,12 +1,11 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, send_file, send_from_directory, safe_join
 from werkzeug.utils import secure_filename
 import os
 
-UPLOAD_FOLDER = os.path.join(os.getcwd(), 'uploads')
 ALLOWED_EXTENSIONS = {'wav', 'mp3'}
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
 
 # To do : move to file storage microservice:
 
@@ -40,7 +39,7 @@ def save_file():
         filename = secure_filename(file.filename)
         dirname = secure_filename(apikey)
         try:
-            os.makedirs(os.path.join(UPLOAD_FOLDER, dirname))
+            os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], dirname))
         except OSError:
             return "Error: did not provide unique key", 400  # dir already exists
 
@@ -54,7 +53,20 @@ def save_file():
 
 @app.route('/get', methods=['GET'])
 def get_file():
-    pass
+    apikey = request.form.get('key')
+    name = request.form.get('filename')
+
+    print(name, flush=True)
+    print(apikey, flush=True)
+
+    filename = secure_filename(name)
+    dirname = secure_filename(apikey)
+
+    try:
+        return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER'], dirname), filename=filename, as_attachment=True)
+
+    except FileNotFoundError:
+        return "Error: File not found", 400
 
 
 if __name__ == '__main__':

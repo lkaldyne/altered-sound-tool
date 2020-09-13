@@ -17,10 +17,10 @@ export class SliderAndInput extends React.Component {
         let newstate = this.state;
         if (!onlyDisplay) {
             let def = this.props.settings["default"]
-            if (newVal != def && this.state.value === def) {
+            if (newVal !== def && this.state.value === def) {
                 this.props.onChange(modDeltas.INCREASE, this.props.settingName, newVal);
             }
-            else if (newVal === def && this.state.value != def) {
+            else if (newVal === def && this.state.value !== def) {
                 this.props.onChange(modDeltas.DECREASE, this.props.settingName, newVal);
             }
             else {

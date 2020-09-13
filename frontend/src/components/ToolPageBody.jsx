@@ -54,7 +54,11 @@ export class ToolPageBody extends React.Component {
                 />
                 break;
             case tool_stages.COMPLETE:
-                page = <ToolComplete invokeNextStage={this.nextStage} />
+                page = <ToolComplete
+                    invokeNextStage={this.nextStage}
+                    apiKey={this.state.apiKey}
+                    filename={this.state.filename}
+                />
                 break;
         }
         return (

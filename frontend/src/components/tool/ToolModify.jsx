@@ -15,8 +15,6 @@ import {
 import { CheckBox } from '../CheckBox';
 import { Button } from '../Button';
 
-const TOTAL_SETTINGS_COUNT = 6
-
 export const modDeltas = {
     NEUTRAL: 0,
     INCREASE: 1,

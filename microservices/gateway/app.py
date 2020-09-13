@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
 
 import os
@@ -70,6 +70,24 @@ def receive_audio_file():
         return res.text, res.status_code
 
 
+@app.route('/get-file/<apikey>/<filename>', methods=['GET'])
+@cross_origin()
+def get_file(apikey, filename):
+    data = {
+        'key': apikey,
+        'filename': filename
+    }
+
+    res = requests.get(
+        url=dependencies['filestore'] + "/get", data=data)
+
+    return Response(
+        res.content,  # content fromthe storage service has the file data
+        headers=dict(res.headers)  # headers need to copied to start download
+    )
+
+
+# @cross_origin()
 # @app.route('/mod', methods=['POST'])
 # @cross_origin()
 # def modify_audio():
@@ -107,7 +125,6 @@ def receive_audio_file():
 #     #     app.config['UPLOAD_FOLDER'], dirname, filename+"-modified"))
 
 #     return jsonify(status="Audio modifications applied successfully")
-
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')

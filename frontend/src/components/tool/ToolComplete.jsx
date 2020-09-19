@@ -1,4 +1,5 @@
 import React from 'react'
+import axios from 'axios'
 import { Icon } from '@iconify/react';
 import { Button } from '../Button';
 import cloudDownloadOutlined from '@iconify/icons-ant-design/cloud-download-outlined';
@@ -20,14 +21,18 @@ export class ToolComplete extends React.Component {
                     </div>
                 </div>
                 <div className="toolcomplete_downloadwrapper">
-                    <div className="toolcomplete_downloadbutton">
+                    <a
+                        href={`0.0.0.0:3000/get-file/${this.props.apiKey}/${this.props.filename}`}
+                        className="toolcomplete_downloadbutton"
+                        download
+                    >
                         <div className="toolcomplete_downloadbuttoncontent">
                             <Icon icon={cloudDownloadOutlined} width="100px" height="95px" />
                         </div>
                         <div className="toolcomplete_downloadbuttoncontent">
                             <p>test123-modified.wav</p>
                         </div>
-                    </div>
+                    </a>
                 </div>
 
                 <div className="toolcomplete_buttonwrapper">

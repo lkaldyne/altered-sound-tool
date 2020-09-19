@@ -27,6 +27,7 @@
 }
 
 .toolcomplete_downloadbutton {
+    text-decoration: none;
     border-radius: 40px;
     width: 25%;
     height: 200px;

@@ -3,11 +3,16 @@ services:
   gateway:
     container_name: gateway_service
     restart: always
-    build: ./gateway
+    build: 
+      context: ./gateway
+      dockerfile: ./gateway/Dockerfile.dev
     ports:
       - 3000:5000
+    volumes: 
+      - ./gateway:/usr/src/app
     depends_on:
       - soundutils
+      - filestore
     networks:
       - service_network
     environment:
@@ -19,22 +24,28 @@ services:
   soundutils:
     container_name: sound_utils_service
     restart: always
-    build: ./sound-utils
+    build: 
+      context: ./sound-utils
+      dockerfile: ./sound-utils/Dockerfile.dev
     ports:
       - "3001:5000"
+    volumes: 
+      - ./sound-utils:/usr/src/app
     networks:
       - service_network
 
   filestore:
     container_name: file_storage_service
     restart: always
-    build: ./filestore
+    build: 
+      context: ./filestore
+      dockerfile: ./filestore/Dockerfile.dev
     ports:
       - "3002:5000"
+    volumes: 
+      - ./filestore:/usr/src/app
     networks:
       - service_network
 
 networks:
   service_network:
-volumes:
-  my_dbdata:

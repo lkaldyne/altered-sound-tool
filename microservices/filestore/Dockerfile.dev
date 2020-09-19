@@ -4,9 +4,11 @@ RUN mkdir /usr/src/app
 
 WORKDIR /usr/src/app
 
-COPY . /usr/src/app
+COPY ./Requirements.txt .
 
 RUN pip install -r Requirements.txt
+
+# COPY . /usr/src/app
 
 EXPOSE 5000
 

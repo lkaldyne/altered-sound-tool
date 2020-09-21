@@ -76,7 +76,6 @@ export class ToolModify extends React.Component {
                     isUploading: false,
                 }));
             });
-        this.props.invokeNextStage(false);
     }
 
     render() {

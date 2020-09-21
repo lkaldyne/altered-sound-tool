@@ -5,45 +5,29 @@ services:
     restart: always
     build: 
       context: ./gateway
-      dockerfile: ./gateway/Dockerfile.dev
+      dockerfile: Dockerfile.dev
     ports:
       - 3000:5000
     volumes: 
       - ./gateway:/usr/src/app
     depends_on:
       - soundutils
-      - filestore
     networks:
       - service_network
     environment:
       SOUNDUTILS_HOST: soundutils
       SOUNDUTILS_PORT: 5000
-      FILESTORE_HOST: filestore
-      FILESTORE_PORT: 5000
 
   soundutils:
     container_name: sound_utils_service
     restart: always
     build: 
       context: ./sound-utils
-      dockerfile: ./sound-utils/Dockerfile.dev
+      dockerfile: Dockerfile.dev
     ports:
       - "3001:5000"
     volumes: 
       - ./sound-utils:/usr/src/app
-    networks:
-      - service_network
-
-  filestore:
-    container_name: file_storage_service
-    restart: always
-    build: 
-      context: ./filestore
-      dockerfile: ./filestore/Dockerfile.dev
-    ports:
-      - "3002:5000"
-    volumes: 
-      - ./filestore:/usr/src/app
     networks:
       - service_network
 

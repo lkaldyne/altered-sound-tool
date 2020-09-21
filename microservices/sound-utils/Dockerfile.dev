@@ -4,15 +4,14 @@ RUN mkdir /usr/src/app
 
 WORKDIR /usr/src/app
 
+RUN apt-get update
+RUN apt-get install -y libsndfile1-dev
+
 COPY ./Requirements.txt .
 
 RUN pip install -r Requirements.txt
 
 # COPY . /usr/src/app
-
-RUN apt-get update
-
-RUN apt-get install -y libsndfile1-dev
 
 EXPOSE 5000
 

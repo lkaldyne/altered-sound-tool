@@ -1,3 +1,6 @@
 .vscode/*
-tempstore/*
-out/*
+.DS_Store
+__pycache__/
+uploads/
+
+

@@ -1,6 +1,5 @@
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
-
 import os
 import requests
 
@@ -16,19 +15,8 @@ def build_api_path(prefix, host, port):
 
 
 dependencies = {
-    "soundutils": build_api_path(ENDPOINT_PREFIX, os.environ['SOUNDUTILS_HOST'], os.environ['SOUNDUTILS_PORT']),
-    "filestore": build_api_path(ENDPOINT_PREFIX, os.environ['FILESTORE_HOST'], os.environ['FILESTORE_PORT'])
-}
-
-
-# To do: map setting keys to appriopriate sound-utils microservice endpoint
-setting_key_to_util_endpoint = {
-    "audiospeed": None,
-    "pitchshift": None,
-    "sizereduction": None,
-    "deepfry": None,
-    "distortion": None,
-    "chordify": None
+    "soundutils": build_api_path(ENDPOINT_PREFIX, os.environ['SOUNDUTILS_HOST'], os.environ['SOUNDUTILS_PORT'])
+    # "filestore": "To be replaced with AWS S3 bucket endpoint"
 }
 
 
@@ -50,7 +38,6 @@ def receive_audio_file():
     if not file or file.filename == '':
         return "Error: did not provide any file", 400
 
-    # data to be sent to filestore microservice
     postdata = {
         'key': apikey
     }
@@ -62,7 +49,7 @@ def receive_audio_file():
     # print(file, flush=True)
 
     res = requests.post(
-        url=dependencies['filestore'] + "/save", files=postfiles, data=postdata)
+        url=dependencies['soundutils'] + "/save-file", files=postfiles, data=postdata)
 
     if res.status_code == 200:
         return jsonify(status="File Successfully Uploaded")
@@ -70,61 +57,54 @@ def receive_audio_file():
         return res.text, res.status_code
 
 
-@app.route('/get-file/<apikey>/<filename>', methods=['GET'])
-@cross_origin()
-def get_file(apikey, filename):
+def get_file(apikey, filename, mod=True):
     data = {
         'key': apikey,
-        'filename': filename
+        'filename': filename,
+        'mod': mod
     }
 
     res = requests.get(
-        url=dependencies['filestore'] + "/get", data=data)
+        url=dependencies['soundutils'] + "/serve-file", json=data)
 
     return Response(
-        res.content,  # content fromthe storage service has the file data
-        headers=dict(res.headers)  # headers need to copied to start download
+        res.content,  # content from the service has the file data
+        # headers included to trigger browser download
+        headers=dict(res.headers)
     )
 
 
-# @cross_origin()
-# @app.route('/mod', methods=['POST'])
-# @cross_origin()
-# def modify_audio():
-#     data = request.get_json()
+@app.route('/get-file/<string:apikey>/<string:filename>', methods=['GET'])
+@cross_origin()
+def get_file_original(apikey, filename):
+    return get_file(apikey, filename, False)
 
-#     print(data, flush=True)
 
-#     if not data['settings']:
-#         return "Error: did not provide audio settings", 400
-#     if not data['defaultsettings']:
-#         return "Error: did not provide default audio settings", 400
-#     if not data['key']:
-#         return "Error: did not provide API key", 400
+@app.route('/get-modified-file/<string:apikey>/<string:filename>', methods=['GET'])
+@cross_origin()
+def get_file_modified(apikey, filename):
+    return get_file(apikey, filename)
 
-#     # To do : The below code belongs in the util and storage microservices
 
-#     # load the user's audio file
-#     filename = secure_filename(data['filename'])
-#     dirname = secure_filename(data['key'])
+@app.route('/mod', methods=['POST'])
+@cross_origin()
+def modify_audio():
+    data = request.get_json()
 
-#     # audio_bin, sr = SoundTools.load(os.path.join(
-#     #     app.config['UPLOAD_FOLDER'], dirname, filename))
+    if not data['settings']:
+        return "Error: did not provide audio settings", 400
+    if not data['defaultSettings']:
+        return "Error: did not provide default audio settings", 400
+    if not data['key']:
+        return "Error: did not provide API key", 400
+    if not data['filename']:
+        return "Error: did not provide file name", 400
 
-#     for key in data['settings']:
-#         # if the setting has been modified
-#         if data['settings'][key] != data['defaultsettings'][key]:
-#             args = {
-#                 "input_data": audio_bin,
-#                 "sr": sr,
-#                 "amount": data['settings'][key]
-#             }
-#             audio_bin = setting_key_to_util_function[key](args)
+    res = requests.post(
+        url=dependencies['soundutils'] + "/audio-mod", json=data)
 
-#     # SoundTools.save(audio_bin, sr, os.path.join(
-#     #     app.config['UPLOAD_FOLDER'], dirname, filename+"-modified"))
+    return res.text, res.status_code
 
-#     return jsonify(status="Audio modifications applied successfully")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0', port='5000')

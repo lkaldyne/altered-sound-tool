@@ -10,10 +10,6 @@ RUN pip install -r Requirements.txt
 
 # COPY . /usr/src/app
 
-RUN mkdir /usr/src/app/uploads
-
-RUN apt install ffmpeg
-
 EXPOSE 5000
 
 CMD ["python", "app.py"]

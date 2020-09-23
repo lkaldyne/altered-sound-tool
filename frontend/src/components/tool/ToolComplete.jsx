@@ -30,7 +30,7 @@ export class ToolComplete extends React.Component {
                             <Icon icon={cloudDownloadOutlined} width="100px" height="95px" />
                         </div>
                         <div className="toolcomplete_downloadbuttoncontent">
-                            <p>test123-modified.wav</p>
+                            <p>altered_{this.props.filename}</p>
                         </div>
                     </a>
                 </div>

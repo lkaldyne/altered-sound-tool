@@ -1,6 +1,8 @@
 import librosa
 import soundfile as sf
 
+DEFAULT_EXPORT_FORMAT = 'WAV'
+
 
 class SoundTools:
     @staticmethod
@@ -18,4 +20,4 @@ class SoundTools:
 
     @staticmethod
     def save(input_data, sr, output_filename):
-        sf.write(output_filename, input_data, sr, format='WAV')
+        sf.write(output_filename, input_data, sr, format=DEFAULT_EXPORT_FORMAT)

@@ -22,7 +22,7 @@ export class ToolComplete extends React.Component {
                 </div>
                 <div className="toolcomplete_downloadwrapper">
                     <a
-                        href={`0.0.0.0:3000/get-modified-file/${this.props.apiKey}/${this.props.filename}`}
+                        href={`http://0.0.0.0:3000/get-modified-file/${this.props.apiKey}/${this.props.filename}`}
                         className="toolcomplete_downloadbutton"
                         download
                     >
@@ -30,7 +30,7 @@ export class ToolComplete extends React.Component {
                             <Icon icon={cloudDownloadOutlined} width="100px" height="95px" />
                         </div>
                         <div className="toolcomplete_downloadbuttoncontent">
-                            <p>altered_{this.props.filename}</p>
+                            <p>Click Here to Download</p>
                         </div>
                     </a>
                 </div>

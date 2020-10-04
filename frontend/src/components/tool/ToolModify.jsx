@@ -38,7 +38,7 @@ export class ToolModify extends React.Component {
         this.state = {
             isUploading: false,
             uploadError: false,
-            settings: defaultSettings,
+            settings: JSON.parse(JSON.stringify(defaultSettings)),
             changedSettings: 0
         }
     }

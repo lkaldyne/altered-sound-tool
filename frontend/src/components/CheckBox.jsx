@@ -1,6 +1,7 @@
 import React from 'react'
 import './styles/CheckBox.css'
 import { Icon } from '@iconify/react';
+import { modDeltas } from './tool/ToolModify'
 import checkmarkIcon from '@iconify/icons-carbon/checkmark';
 
 
@@ -10,12 +11,18 @@ export class CheckBox extends React.Component {
         super(props);
 
         this.state = {
-            checked: false
+            checked: this.props.settings["default"]
         }
     }
 
     toggle = () => {
-        this.setState({ checked: !this.state.checked })
+        let newVal = !this.state.checked;
+        if (newVal !== this.props.settings["default"]) {
+            this.props.onChange(modDeltas.INCREASE, this.props.settingName, newVal);
+        }
+        else {
+            this.props.onChange(modDeltas.INCREASE, this.props.settingName, newVal);
+        }
     }
 
     render() {

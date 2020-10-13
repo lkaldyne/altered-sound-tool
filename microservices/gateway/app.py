@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
 import os
 import requests
+import uuid
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -12,6 +13,10 @@ ENDPOINT_PREFIX = "http"
 
 def build_api_path(prefix, host, port):
     return "%s://%s:%s" % (prefix, host, port)
+
+
+def generate_key():
+    return str(uuid.uuid1())
 
 
 dependencies = {
@@ -33,26 +38,28 @@ def healthcheck():
 @cross_origin()
 def receive_audio_file():
     file = request.files.get('audiofile')
-    apikey = request.form.get('key')
 
     if not file or file.filename == '':
         return "Error: did not provide any file", 400
 
+    generated_key = generate_key()
+
     postdata = {
-        'key': apikey
+        'key': generated_key
     }
 
     postfiles = {
         'file': (file.filename, file)
     }
 
-    # print(file, flush=True)
-
     res = requests.post(
         url=dependencies['soundutils'] + "/save-file", files=postfiles, data=postdata)
 
     if res.status_code == 200:
-        return jsonify(status="File Successfully Uploaded")
+        return jsonify(
+            status="File Successfully Uploaded",
+            key=generated_key
+        )
     else:
         return res.text, res.status_code
 

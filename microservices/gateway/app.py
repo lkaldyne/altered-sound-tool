@@ -7,7 +7,7 @@ import uuid
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024  # 16Mb file size limit
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 16Mb file size limit
 ENDPOINT_PREFIX = "http"
 
 
@@ -93,6 +93,13 @@ def get_file_modified(apikey, filename):
     return get_file(apikey, filename)
 
 
+@app.route('/get-modifier-settings', methods=['GET'])
+@cross_origin()
+def get_modifier_settings():
+    return requests.get(
+        url=dependencies['soundutils'] + "/get-modifier-settings").content
+
+
 @app.route('/mod', methods=['POST'])
 @cross_origin()
 def modify_audio():
@@ -100,8 +107,6 @@ def modify_audio():
 
     if not data['settings']:
         return "Error: did not provide audio settings", 400
-    if not data['defaultSettings']:
-        return "Error: did not provide default audio settings", 400
     if not data['key']:
         return "Error: did not provide API key", 400
     if not data['filename']:

@@ -3,15 +3,6 @@ import axios from 'axios'
 import './styles/ToolModify.css'
 import { ToolProcessing } from './ToolProcessing'
 import { SliderAndInput } from '../SliderAndInput'
-
-import {
-    audiospeedsettings,
-    pitchshiftsettings,
-    sizereductionsettings,
-    deepfrysettings,
-    distortionsettings
-} from './ToolSettingDefaults'
-
 import { CheckBox } from '../CheckBox';
 import { Button } from '../Button';
 
@@ -21,26 +12,47 @@ export const modDeltas = {
     DECREASE: 2
 }
 
-const defaultSettings = {
-    "audiospeed": audiospeedsettings['default'],
-    "pitchshift": pitchshiftsettings['default'],
-    "sizereduction": sizereductionsettings['default'],
-    "deepfry": deepfrysettings['default'],
-    "distortion": distortionsettings['default'],
-    "chordify": false
-}
-
 export class ToolModify extends React.Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            isUploading: false,
+            isLoading: true,
             uploadError: false,
-            settings: JSON.parse(JSON.stringify(defaultSettings)),
-            changedSettings: 0
+            settings: {}, // JSON.parse(JSON.stringify(defaultSettings))
+            changedSettings: 0,
+            modifier_settings: {}
         }
+    }
+
+    componentDidMount = () => {
+        // - get modifier settings, save them to state
+        // - set up default settings and set them as current settings
+        // - change up the settings variable passed into each sliderAndInput component
+
+        axios.get('http://0.0.0.0:3000/get-modifier-settings')
+            .then(res => {
+                this.setState({
+                    modifier_settings: res.data.modifier_settings,
+                    settings: this.getDefaults(res.data.modifier_settings),
+                    isLoading: false
+                });
+            })
+            .catch((e) => {
+                // Temporary. To do: create error page with retry button
+                alert(e);
+            });
+    }
+
+    getDefaults = (settings) => {
+        let newSettings = {}
+
+        for (let key of Object.keys(settings)) {
+            newSettings[key] = settings[key]["default"]
+        }
+
+        return newSettings;
     }
 
     childChanged = (delta, key, value) => {
@@ -58,22 +70,19 @@ export class ToolModify extends React.Component {
     }
 
     finalize = () => {
-        this.setState({ isUploading: true });
-        // axios api post logic
+        this.setState({ isLoading: true });
         axios.post('http://0.0.0.0:3000/mod', {
             'key': this.props.apiKey,
             'filename': this.props.filename,
-            'settings': this.state.settings,
-            'defaultSettings': defaultSettings
+            'settings': this.state.settings
         })
             .then(res => {
-                // this.props.notifyParent(generatedKey, this.state.currentFile.name);
                 this.props.invokeNextStage(false)
             })
             .catch((e) => {
                 this.setState(prevState => ({
                     uploadError: true,
-                    isUploading: false,
+                    isLoading: false,
                 }));
             });
     }
@@ -91,13 +100,13 @@ export class ToolModify extends React.Component {
                 </div>
                 <div className="toolmodify_modbox">
                     <div className="toolmodify_settingwrapper">
-                        <div className="toolmodify_settingtitle" onClick={() => console.log(this.state.settings)}>
+                        <div className="toolmodify_settingtitle">
                             <p className="toolmodify_settingtext">Audio Speed:</p>
                         </div>
                         <SliderAndInput
                             settingName={"audiospeed"}
                             onChange={this.childChanged}
-                            settings={audiospeedsettings}
+                            settings={this.state.modifier_settings["audiospeed"]}
                             maxLength={4}
                             step={0.1}
                         />
@@ -109,7 +118,7 @@ export class ToolModify extends React.Component {
                         <SliderAndInput
                             settingName={"pitchshift"}
                             onChange={this.childChanged}
-                            settings={pitchshiftsettings}
+                            settings={this.state.modifier_settings["pitchshift"]}
                             maxLength={3}
                             step={1}
                         />
@@ -124,7 +133,7 @@ export class ToolModify extends React.Component {
                         <SliderAndInput
                             settingName={"sizereduction"}
                             onChange={this.childChanged}
-                            settings={sizereductionsettings}
+                            settings={this.state.modifier_settings["sizereduction"]}
                             maxLength={3}
                             step={1}
                         />
@@ -139,7 +148,7 @@ export class ToolModify extends React.Component {
                         <SliderAndInput
                             settingName={"deepfry"}
                             onChange={this.childChanged}
-                            settings={deepfrysettings}
+                            settings={this.state.modifier_settings["deepfry"]}
                             maxLength={3}
                             step={1}
                         />
@@ -154,7 +163,7 @@ export class ToolModify extends React.Component {
                         <SliderAndInput
                             settingName={"distortion"}
                             onChange={this.childChanged}
-                            settings={distortionsettings}
+                            settings={this.state.modifier_settings["distortion"]}
                             maxLength={3}
                             step={1}
                         />
@@ -170,6 +179,7 @@ export class ToolModify extends React.Component {
                             <CheckBox
                                 settingName={"chordify"}
                                 onChange={this.childChanged}
+                                settings={this.state.modifier_settings["chordify"]}
                             />
                         </div>
                         <div className="toolmodify_settingcomment">
@@ -204,7 +214,7 @@ export class ToolModify extends React.Component {
         return (
             <React.Fragment>
                 {
-                    this.state.isUploading ?
+                    this.state.isLoading ?
                         <ToolProcessing />
                         :
                         mainpage

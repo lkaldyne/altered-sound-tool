@@ -16,7 +16,7 @@ export function ToolProcessing() {
                         />
                     </div>
                     <div className="toolprocessing_loadingitem">
-                        <p>Processing...</p>
+                        <p>Loading...</p>
                     </div>
 
                 </div>

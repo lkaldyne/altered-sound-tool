@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_from_directory, safe_join
 from werkzeug.utils import secure_filename
 from util.sound_tools import SoundTools, DEFAULT_EXPORT_FORMAT
 import os
+import json
 
 ALLOWED_EXTENSIONS = ['wav', 'mp3', 'flac',
                       'ogg', 'aiff', 'wavex', 'raw', 'mat5']
@@ -28,6 +29,11 @@ def allowed_file(filename):
 
 def fix_filename_ext(filename):
     return "".join(filename.split(".")[0:-1]) + "." + DEFAULT_EXPORT_FORMAT.lower()
+
+
+def load_modifier_settings():
+    with open(os.path.join(os.getcwd(), 'util', 'modifier_settings.json')) as f:
+        return json.load(f)
 
 
 @app.route('/healthstatus')
@@ -85,6 +91,11 @@ def serve_file():
         return "Error: File not found", 400
 
 
+@app.route('/get-modifier-settings', methods=['GET'])
+def get_modifier_settings():
+    return jsonify(status="success", modifier_settings=load_modifier_settings())
+
+
 @app.route('/audio-mod', methods=['POST'])
 def do_audio_mod():
     data = request.get_json()
@@ -92,7 +103,7 @@ def do_audio_mod():
     apikey = data['key']
     name = data['filename']
     settings = data['settings']
-    defaultsettings = data['defaultSettings']
+    defaultsettings = load_modifier_settings()
 
     filename = secure_filename(name)
     dirname = secure_filename(apikey)
@@ -102,7 +113,7 @@ def do_audio_mod():
 
     for key in settings:
         val = settings[key]
-        if val != defaultsettings[key]:
+        if val != defaultsettings[key]['default']:
             # setting has been modified
             args = {
                 "input_data": audiodata,

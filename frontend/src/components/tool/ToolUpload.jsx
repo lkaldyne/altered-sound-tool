@@ -69,7 +69,6 @@ export class ToolUpload extends React.Component {
     fileDrop = (e) => {
         e.preventDefault();
         const files = e.dataTransfer.files;
-        console.log(files[0])
         if (files.length) {
             this.handleFiles(files);
         }

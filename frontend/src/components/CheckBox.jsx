@@ -21,8 +21,9 @@ export class CheckBox extends React.Component {
             this.props.onChange(modDeltas.INCREASE, this.props.settingName, newVal);
         }
         else {
-            this.props.onChange(modDeltas.INCREASE, this.props.settingName, newVal);
+            this.props.onChange(modDeltas.DECREASE, this.props.settingName, newVal);
         }
+        this.setState({ checked: newVal });
     }
 
     render() {

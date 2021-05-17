@@ -13,4 +13,3 @@ SETTING_TO_METHOD_MAP = {
 }
 
 MODPREFIX = "altered_"
-ENDPOINT_PREFIX = "http"

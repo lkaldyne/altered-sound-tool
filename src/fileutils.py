@@ -34,7 +34,10 @@ def save_file(loc, file, apikey):
         file.save(os.path.join(
             loc, dirname, filename))
 
-        return jsonify(status="File Successfully Saved")
+        return jsonify(
+            status="File Successfully Saved",
+            key=apikey
+        )
     else:
         return "Error: File type not valid", 400
 

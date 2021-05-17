@@ -34,8 +34,8 @@ export class ToolModify extends React.Component {
         axios.get('http://0.0.0.0:3000/get-modifier-settings')
             .then(res => {
                 this.setState({
-                    modifier_settings: res.data.modifier_settings,
-                    settings: this.getDefaults(res.data.modifier_settings),
+                    modifier_settings: res.data,
+                    settings: this.getDefaults(res.data),
                     isLoading: false
                 });
             })

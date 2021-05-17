@@ -1,4 +1,6 @@
+Flask-Cors==3.0.9
 Flask==1.1.2
+requests==2.24.0
 librosa==0.8.0
 SoundFile==0.10.3.post1
 Werkzeug==1.0.1

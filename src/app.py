@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
+from consts import ENDPOINT_PREFIX
 import os
 import requests
 import uuid
@@ -8,7 +9,6 @@ app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
 app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 16Mb file size limit
-ENDPOINT_PREFIX = "http"
 
 
 def build_api_path(prefix, host, port):

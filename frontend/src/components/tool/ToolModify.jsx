@@ -31,7 +31,7 @@ export class ToolModify extends React.Component {
         // - set up default settings and set them as current settings
         // - change up the settings variable passed into each sliderAndInput component
 
-        axios.get('api.alteredsound.laithkd.com/get-modifier-settings')
+        axios.get('http://api.alteredsound.laithkd.com/get-modifier-settings')
             .then(res => {
                 this.setState({
                     modifier_settings: res.data,
@@ -71,7 +71,7 @@ export class ToolModify extends React.Component {
 
     finalize = () => {
         this.setState({ isLoading: true });
-        axios.post('api.alteredsound.laithkd.com/mod', {
+        axios.post('http://api.alteredsound.laithkd.com/mod', {
             'key': this.props.apiKey,
             'filename': this.props.filename,
             'settings': this.state.settings

@@ -22,7 +22,7 @@ export class ToolComplete extends React.Component {
                 </div>
                 <div className="toolcomplete_downloadwrapper">
                     <a
-                        href={`api.alteredsound.laithkd.com/get-modified-file/${this.props.apiKey}/${this.props.filename}`}
+                        href={`http://api.alteredsound.laithkd.com/get-modified-file/${this.props.apiKey}/${this.props.filename}`}
                         className="toolcomplete_downloadbutton"
                         download
                     >

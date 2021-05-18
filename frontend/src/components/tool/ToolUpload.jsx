@@ -93,7 +93,7 @@ export class ToolUpload extends React.Component {
         const formData = new FormData();
         formData.append('audiofile', this.state.currentFile);
         axios({
-            url: 'api.alteredsound.laithkd.com/upload',
+            url: 'http://api.alteredsound.laithkd.com/upload',
             method: "POST",
             data: formData
         })

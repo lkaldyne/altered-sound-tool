@@ -4,3 +4,5 @@ requests==2.24.0
 librosa==0.8.0
 SoundFile==0.10.3.post1
 Werkzeug==1.0.1
+python-dotenv==0.17.1
+boto3==1.17.75

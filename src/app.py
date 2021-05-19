@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS, cross_origin
+from dotenv import load_dotenv
 import os
 import requests
 import uuid
@@ -9,11 +10,13 @@ import json
 app = Flask(__name__)
 cors = CORS(app)
 app.config['CORS_HEADERS'] = 'Content-Type'
-app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 16Mb file size limit
+app.config['MAX_CONTENT_LENGTH'] = 50 * 1024 * 1024  # 50 Mb file size limit
 app.config['UPLOAD_FOLDER'] = os.path.join(os.getcwd(), 'uploads')
 app.config['MODIFIER_DEFAULTS'] = json.load(
     open(os.path.join(os.getcwd(), 'util', 'modifier_settings.json'))
 )
+
+load_dotenv()
 
 
 def generate_key():

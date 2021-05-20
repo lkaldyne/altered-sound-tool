@@ -33,7 +33,7 @@ after_success:
   - pip install --user awscli # install aws cli w/o sudo
   - export PATH=$PATH:$HOME/.local/bin # put aws in the path
   - eval $(aws ecr get-login --region ca-central-1) # needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
-  - docker build -t alteredsoundbackend-monolith .
+  - docker build -t alteredsoundbackend-monolith ./src
   - docker tag alteredsoundbackend-monolith:latest 193824614748.dkr.ecr.ca-central-1.amazonaws.com/alteredsoundbackend-monolith:latest
   - docker push 193824614748.dkr.ecr.ca-central-1.amazonaws.com/alteredsoundbackend-monolith:latest
   

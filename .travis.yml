@@ -1,7 +1,7 @@
 # Stage 1 (Deploy Backend):
 #   - lint python package (pylint)
 #   - docker build, tag, and push source code to ECR
-#   - exec into EC2 container
+#   - ssh into EC2 host
 #     - docker kill running container
 #     - docker prune and pull latest from ECR
 #     - docker run image with port forwarding (80:5000)
@@ -11,3 +11,30 @@
 #   - lint react project (eslint)
 #   - npm run build
 #   - upload all contents from build folder to prod frontend s3 bucket
+
+
+sudo: required # required to use docker service in travis
+
+language: python # can be any language, just php for example
+
+services:
+  - docker # required, travis uses older version of docker
+
+
+install:
+  - echo "performing preinstalls" # pre-linting and pre-testing installs here
+
+script:
+  - echo "performing linting"
+  - echo "performing tests"
+
+after_success:
+  - docker --version  # document the version travis is using
+  - pip install --user awscli # install aws cli w/o sudo
+  - export PATH=$PATH:$HOME/.local/bin # put aws in the path
+  - eval $(aws ecr get-login --region ca-central-1) # needs AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY envvars
+  - docker build -t alteredsoundbackend-monolith .
+  - docker tag alteredsoundbackend-monolith:latest 193824614748.dkr.ecr.ca-central-1.amazonaws.com/alteredsoundbackend-monolith:latest
+  - docker push 193824614748.dkr.ecr.ca-central-1.amazonaws.com/alteredsoundbackend-monolith:latest
+  
+# sadly, travis doesn't cache docker builds yet, so each build will take a while

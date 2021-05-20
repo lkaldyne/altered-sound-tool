@@ -1,0 +1,13 @@
+# Stage 1 (Deploy Backend):
+#   - lint python package (pylint)
+#   - docker build, tag, and push source code to ECR
+#   - exec into EC2 container
+#     - docker kill running container
+#     - docker prune and pull latest from ECR
+#     - docker run image with port forwarding (80:5000)
+#     - inject AWS secrets from travis env vars to .env file in docker container
+
+# Stage 2 (Deploy Frontend):
+#   - lint react project (eslint)
+#   - npm run build
+#   - upload all contents from build folder to prod frontend s3 bucket
